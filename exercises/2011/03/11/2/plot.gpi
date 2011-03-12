@@ -1,3 +1,11 @@
-# set xrange[1.0:5.00]
+set xrange[1.0:5.00]
 g(x) = 6*x + 2*(cos(x))**2 - 4*x**2*sin(x) - 5/x**2
-plot g(x), '/tmp/interpolation.out' w lines linestyle 3
+
+set terminal png large size 1024, 768 crop
+set output 'output/plot.png'
+plot g(x), 'output/interpolation.dat' w lines linestyle 3
+
+set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set output 'output/plot.pdf'
+replot
+
