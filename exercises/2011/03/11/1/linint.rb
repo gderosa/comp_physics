@@ -24,6 +24,8 @@ def f(x)
   cos(log x) + x + 2
 end
 
+out = File.open 'output/interpolation.dat', 'w'
+
 for i in 0..(@x.length - 2) do
   subinterval = (@x[i+1] - @x[i]) / SUBINTERVALS
   for j in 0..(SUBINTERVALS - 1)
@@ -31,9 +33,11 @@ for i in 0..(@x.length - 2) do
     interpolate = @y[i] + ((@y[i+1] - @y[i])/(@x[i+1] - @x[i])) * (x - @x[i])
     delta = (f(x) - interpolate).abs
     @max_delta = delta if delta > @max_delta
-    puts "x = #{x} \t Delta = #{delta} "
+    out.puts "#{x}\t#{interpolate}\t#{delta} "
   end
 end
+
+out.close
 
 puts "Maximun Delta = #{@max_delta}"
 

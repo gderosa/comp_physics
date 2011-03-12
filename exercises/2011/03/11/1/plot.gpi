@@ -1,0 +1,10 @@
+set xrange[1.7:2.0]
+f(x) = cos(log(x)) + x + 2 
+set terminal png large size 1024, 768 crop
+set output 'output/plot.png'
+plot f(x), 'output/interpolation.dat' w lines linestyle 3
+
+set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set output 'output/plot.pdf'
+replot
+
