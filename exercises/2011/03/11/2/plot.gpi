@@ -1,0 +1,3 @@
+# set xrange[1.0:5.00]
+g(x) = 6*x + 2*(cos(x))**2 - 4*x**2*sin(x) - 5/x**2
+plot g(x), '/tmp/interpolation.out' w lines linestyle 3
