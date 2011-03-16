@@ -19,6 +19,6 @@ int main() {
 	matrix_print(A);
 
 	printf("\nL= \n");
-	cholesky_lower(L, A);
+	cholesky_L(L, A);
 	matrix_print(L);
 }

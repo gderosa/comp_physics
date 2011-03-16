@@ -27,8 +27,8 @@ void subdiag_positive_init(Subdiagonal subdiag);
 
 void tridiag_simmetric_positive_init(Matrix A);
 
-void cholesky_diag(Matrix L, Index i);
-void cholesky_other(Matrix L, Index i, Index j);
+void cholesky_diag(Matrix L, Matrix A, Index i);
+void cholesky_other(Matrix L, Matrix A, Index i, Index j);
 void cholesky_lower(Matrix L, Matrix A);
 
 void matrix_print(Matrix A);

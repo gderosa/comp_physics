@@ -49,16 +49,31 @@ void tridiag_simmetric_positive_init(Matrix A) {
 	}
 }
 
-/* stub */
-void cholesky_diag(Matrix L, Index i) {
-	L[i][i] = 4.0;
+/* Algorithm should never make you read uninitialized values; otherwise
+ * you would probably crash your program.
+ */
+
+void cholesky_L_diag(Matrix L, Matrix A, Index i) {
+	double sum = 0.0;
+	Index k;
+
+	for (k=0; k<i; k++) 
+		sum += L[i][k] * L[i][k];
+
+	L[i][i] = sqrt(A[i][i] - sum);
 }
 
-void cholesky_other(Matrix L, Index i, Index j) {
-	L[i][j] = 3.0;
+void cholesky_L_other(Matrix L, Matrix A, Index i, Index j) {
+	double sum = 0.0;
+	Index k;
+
+	for (k=0; k<j; k++)
+		sum += L[j][k] * L[i][k]; 
+
+	L[i][j] = (1 / L[j][j]) * (A[j][i] - sum); 
 }
 
-void cholesky_lower(Matrix L, Matrix A) {
+void cholesky_L(Matrix L, Matrix A) {
 	Index i, j;
 
 	for (i=0; i<N; i++) {
@@ -66,9 +81,9 @@ void cholesky_lower(Matrix L, Matrix A) {
 			if ( i < j )
 				L[i][j] = 0.0;
 			else if ( i == j ) 
-				cholesky_diag(L, i);
+				cholesky_L_diag(L, A, i);
 			else
-				cholesky_other(L, i, j);	
+				cholesky_L_other(L, A, i, j);	
 		}
 	}
 }
