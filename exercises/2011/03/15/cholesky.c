@@ -53,19 +53,3 @@ void tridiag_simmetric_positive_init(Matrix A) {
 	}
 }
 
-void matrix_print(Matrix A) {
-	char * fmt = "%02.2f ";
-	Index i, j;
-	for (i=0; i<N; i++) {
-		for (j=0; j<N; j++) {
-			printf(fmt, A[i][j]);
-		}
-		printf("\n"); 
-	}
-}
-
-int main() {
-	Matrix A;	
-	tridiag_simmetric_positive_init(A);
-	matrix_print(A);
-}
