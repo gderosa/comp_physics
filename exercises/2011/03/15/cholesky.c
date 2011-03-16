@@ -7,20 +7,16 @@
 
 #include "cholesky.h"
 
-/* Having all elements > 0 is enough (but not necessary!) to guarantee
- * that the matrix is positive-definite.
+/* A matrix with all diagonal elements = 1 and A[i][j] = 0.5 
+ * when |i - j| = -1 happens to be positive definite.
  */
 
-/* Quite stupid. Initialize with all 1's. 
- * TODO: use random numbers or other fancy things. 
- */
 void diag_positive_init(Diagonal diag) {
 	Index i;
 	for (i=0; i<N; i++) 
 		diag[i] = 1.0;
 }
 
-/* As stupid as diag_positive_init() */
 void subdiag_positive_init(Subdiagonal subdiag) {
 	Index i;
 	for (i = 0; i < N-1; i++)
