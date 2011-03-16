@@ -9,17 +9,7 @@
  *
  */
 
-/* Resources for matrices and vectors are statically allocated here */
-/* TODO: use malloc() etc. */
-
-#include <stdio.h>
-
-#define N 10
-
-typedef double Matrix[N][N];
-typedef double Diagonal[N];
-typedef double Subdiagonal[N-1];
-typedef unsigned int Index;
+#include "cholesky.h"
 
 /* Having all elements > 0 is enough (but not necessary!) to guarantee
  * that the matrix is positive-definite.
