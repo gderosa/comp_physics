@@ -1,8 +1,4 @@
 /* 
- * By Guido De Rosa, 2011, released to the Public Domain.
- *
- * Computational Physics course, Univ. of Naples
- *
  * Cholesky decomposition.
  *
  * Ref. Numerical Recipes, 3rd Ed., Sec 2.9 (Math only) 
@@ -53,3 +49,26 @@ void tridiag_simmetric_positive_init(Matrix A) {
 	}
 }
 
+/* stub */
+void cholesky_diag(Matrix L, Index i) {
+	L[i][i] = 4.0;
+}
+
+void cholesky_other(Matrix L, Index i, Index j) {
+	L[i][j] = 3.0;
+}
+
+void cholesky_lower(Matrix L, Matrix A) {
+	Index i, j;
+
+	for (i=0; i<N; i++) {
+		for (j=0; j<N; j++) {
+			if ( i < j )
+				L[i][j] = 0.0;
+			else if ( i == j ) 
+				cholesky_diag(L, i);
+			else
+				cholesky_other(L, i, j);	
+		}
+	}
+}

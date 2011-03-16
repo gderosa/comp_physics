@@ -12,7 +12,7 @@
 /* Resources for matrices and vectors are statically allocated here */
 /* TODO: use malloc() etc. */
 
-#include <stdio.h>
+#include <math.h>
 
 #define N 10
 
@@ -26,6 +26,10 @@ void diag_positive_init(Diagonal diag);
 void subdiag_positive_init(Subdiagonal subdiag); 
 
 void tridiag_simmetric_positive_init(Matrix A);
+
+void cholesky_diag(Matrix L, Index i);
+void cholesky_other(Matrix L, Index i, Index j);
+void cholesky_lower(Matrix L, Matrix A);
 
 void matrix_print(Matrix A);
 

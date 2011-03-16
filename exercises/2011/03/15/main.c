@@ -9,10 +9,16 @@
  *
  */
 
+#include <stdio.h>
 #include "cholesky.h"
 
 int main() {
-	Matrix A;	
+	Matrix A, L;	
 	tridiag_simmetric_positive_init(A);
+	printf("A = \n");
 	matrix_print(A);
+
+	printf("\nL= \n");
+	cholesky_lower(L, A);
+	matrix_print(L);
 }

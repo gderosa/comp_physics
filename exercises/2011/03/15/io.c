@@ -9,6 +9,7 @@
  *
  */
 
+#include <stdio.h>
 #include "cholesky.h"
 
 void matrix_print(Matrix A) {
