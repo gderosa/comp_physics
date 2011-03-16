@@ -39,7 +39,7 @@ void tridiag_simmetric_positive_init(Matrix A) {
 	diag_positive_init(diag);
 	subdiag_positive_init(subdiag);
 	
-	for	(i=0; i<N; i++) {
+	for (i=0; i<N; i++) {
 		for (j=0; j<N; j++) {
 			if (i == j)
 				A[i][i] = diag[i];

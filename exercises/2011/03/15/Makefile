@@ -4,11 +4,14 @@ CC=cc -O2
 LINK=cc
 EXE=cholesky
 
-all:
-	${CC} -c main.c
-	${CC} -c io.c
-	${CC} -c cholesky.c
+all: ${EXE}
+
+${EXE}: main.o io.o cholesky.o
 	${LINK} -o ${EXE} main.o io.o cholesky.o
+
+.o:
+	${CC} -c -o $*.o $< 
 
 clean:
 	rm -f *.o ${EXE}
+
