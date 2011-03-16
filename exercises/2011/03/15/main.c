@@ -22,7 +22,7 @@ int main() {
 	printf("A = \n");
 	matrix_print(A);
 
-	printf("\nL= \n");
+	printf("\nL = \n");
 	matrix_print(L);
 
 	return 0;
