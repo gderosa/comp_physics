@@ -11,9 +11,12 @@
 
 #include <stdio.h>
 #include "splines_cholesky.h"
+#include "random.h"
 
 int main() {
-	Matrix A, L;	
+	Matrix A, L;
+
+	random_init();	
 	
 	tridiag_simmetric_positive_init(A);
 

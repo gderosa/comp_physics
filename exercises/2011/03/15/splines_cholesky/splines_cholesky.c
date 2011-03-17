@@ -1,9 +1,10 @@
 #include "splines_cholesky.h"
+#include "random.h"
 
 void intervals_generate(Intervals h) {
 	Index i;
-	for (i=0; i<NINTERVALS; i++)
-		h[i] = 0.25;
+	for (i=0; i<NINTERVALS; i++) 
+		h[i] = random_double(2.5);
 }
 
 /* see: T.Pang, Computational Ph., eq. 2.51 */
