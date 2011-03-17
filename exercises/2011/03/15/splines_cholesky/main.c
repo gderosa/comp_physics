@@ -5,8 +5,6 @@
  *
  * Cholesky decomposition.
  *
- * Ref. Numerical Recipes, 3rd Ed., Sec 2.9 (Math only) 
- *
  */
 
 #include <stdio.h>

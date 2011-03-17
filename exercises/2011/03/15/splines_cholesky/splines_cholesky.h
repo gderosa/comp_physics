@@ -3,7 +3,7 @@
  *
  * Computational Physics course, Univ. of Naples
  *
- * Cholesky decomposition of the matrix got from a random splines 
+ * Cholesky decomposition of the matrix got from a splines 
  * interpolation problem (fixed number of points).
  *
  * See:

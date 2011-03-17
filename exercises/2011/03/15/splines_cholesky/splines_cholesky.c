@@ -8,7 +8,7 @@ void intervals_generate(Intervals h) {
 }
 
 /* see: T.Pang, Computational Ph., eq. 2.51 */
-/* Here, matrix indices are lowered by 1 */
+/* Here, matrix indices are lowered by 1 (they start from 0) */
 void tridiag_simmetric_positive_init(Matrix A) {
 	Index i, j;
 	Intervals h;
