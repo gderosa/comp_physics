@@ -4,7 +4,7 @@ CC=cc
 CFLAGS=-O2 -ansi
 LINK=cc 
 LIBS=-lm
-OBJS=main.o io.o splines_cholesky.o
+OBJS=main.o mm.o io.o splines_cholesky.o
 EXE=splines_cholesky
 
 all: ${EXE}

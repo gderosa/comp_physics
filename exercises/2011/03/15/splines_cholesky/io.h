@@ -4,6 +4,9 @@
  * Computational Physics course, Univ. of Naples
  */
 
+#ifndef IO_H
+#define IO_H
+
 #include <stdio.h>
 
 #include "splines_cholesky.h"
@@ -13,3 +16,4 @@
 
 void matrix_print(Matrix A);
 
+#endif

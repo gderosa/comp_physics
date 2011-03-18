@@ -1,3 +1,6 @@
+#include <stdio.h>
+
+#include "mm.h"
 #include "splines_cholesky.h"
 #include "random.h"
 
@@ -11,7 +14,7 @@ void intervals_generate(Intervals h) {
 /* Here, matrix indices are lowered by 1 (they start from 0) */
 void tridiag_simmetric_positive_init(Matrix A) {
 	Index i, j;
-	Intervals h;
+	Intervals h = malloc(NINTERVALS * sizeof(double));
 
 	intervals_generate(h);
 	
@@ -27,6 +30,8 @@ void tridiag_simmetric_positive_init(Matrix A) {
 				A[i][j] = 0.0;
 		}
 	}
+
+	/* free(h); */
 }
 
 /* Algorithm should never make you read uninitialized values; otherwise
@@ -57,6 +62,7 @@ void cholesky_L(Matrix L, Matrix A) {
 	Index i, j;
 
 	for (i=0; i<N; i++) {
+		printf("Computing row #%d out of %d \t \r", i, N);
 		for (j=0; j<N; j++) {
 			if ( i < j )
 				L[i][j] = 0.0;

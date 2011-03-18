@@ -7,12 +7,14 @@
  *
  */
 
-#include <stdio.h>
+#include "mm.h"
 #include "splines_cholesky.h"
 #include "random.h"
+#include "io.h"
 
 int main() {
-	Matrix A, L;
+	Matrix A = matrix_allocate(N);
+	Matrix L = matrix_allocate(N);
 
 	random_init();	
 	
@@ -25,6 +27,9 @@ int main() {
 
 	printf("\nL = \n");
 	matrix_print(L);
+
+	matrix_free(A, N);
+	matrix_free(L, N);
 
 	return 0;
 }

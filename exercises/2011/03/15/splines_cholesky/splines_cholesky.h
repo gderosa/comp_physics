@@ -12,15 +12,19 @@
  *
  */
 
+#ifndef SPLINES_CHOLESKY_H
+#define SPLINES_CHOLESKY_H
+
+#include <stdlib.h>
 #include <math.h>
 
-#define NPOINTS 500
+#define NPOINTS 5000
 #define NINTERVALS (NPOINTS - 1)
 #define N (NINTERVALS - 1) 
 
-typedef double Intervals[NINTERVALS];
-typedef double Matrix[N][N];
-typedef double Vector[N];
+typedef double *Intervals ;
+typedef double **Matrix;
+typedef double *Vector;
 typedef unsigned int Index;
 
 void intervals_generate(Intervals h);
@@ -31,4 +35,4 @@ void cholesky_diag(Matrix L, Matrix A, Index i);
 void cholesky_other(Matrix L, Matrix A, Index i, Index j);
 void cholesky_lower(Matrix L, Matrix A);
 
-
+#endif
