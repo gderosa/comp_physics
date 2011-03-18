@@ -9,13 +9,23 @@
 #include "splines_cholesky.h"
 
 void matrix_print(Matrix A) {
+	Index max_printable = 14;
+
 	char * fmt = "%02.2f ";
 	Index i, j;
 	for (i=0; i<N; i++) {
-		for (j=0; j<N; j++) {
-			printf(fmt, A[i][j]);
-		}
-		printf("\n"); 
+		if (i < max_printable) {
+			for (j=0; j<N; j++) {
+				if (j < max_printable)
+					printf(fmt, A[i][j]);
+				else if (j == max_printable)
+					printf("... ");
+			}
+			printf("\n"); 
+		} else if (i == max_printable) 
+			printf("... \n");
+		else
+			break;
 	}
 }
 

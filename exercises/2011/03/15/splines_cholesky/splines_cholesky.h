@@ -14,7 +14,7 @@
 
 #include <math.h>
 
-#define NPOINTS 12
+#define NPOINTS 500
 #define NINTERVALS (NPOINTS - 1)
 #define N (NINTERVALS - 1) 
 
