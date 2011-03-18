@@ -31,5 +31,4 @@ void cholesky_diag(Matrix L, Matrix A, Index i);
 void cholesky_other(Matrix L, Matrix A, Index i, Index j);
 void cholesky_lower(Matrix L, Matrix A);
 
-void matrix_print(Matrix A);
 

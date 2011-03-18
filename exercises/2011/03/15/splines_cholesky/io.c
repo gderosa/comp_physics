@@ -5,24 +5,22 @@
  *
  */
 
-#include <stdio.h>
-#include "splines_cholesky.h"
+#include "io.h"
 
 void matrix_print(Matrix A) {
-	Index max_printable = 14;
-
 	char * fmt = "%02.2f ";
 	Index i, j;
+
 	for (i=0; i<N; i++) {
-		if (i < max_printable) {
+		if (i < MAX_PRINTABLE_ROWS) {
 			for (j=0; j<N; j++) {
-				if (j < max_printable)
+				if (j < MAX_PRINTABLE_COLS)
 					printf(fmt, A[i][j]);
-				else if (j == max_printable)
+				else if (j == MAX_PRINTABLE_COLS)
 					printf("... ");
 			}
 			printf("\n"); 
-		} else if (i == max_printable) 
+		} else if (i == MAX_PRINTABLE_ROWS) 
 			printf("... \n");
 		else
 			break;
