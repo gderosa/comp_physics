@@ -9,7 +9,7 @@ EXE=splines_cholesky
 
 all: ${EXE}
 
-${EXE}: main.o io.o splines_cholesky.o
+${EXE}: ${OBJS}
 	${LINK} ${LIBS} -o ${EXE} ${OBJS}
 
 .o:
