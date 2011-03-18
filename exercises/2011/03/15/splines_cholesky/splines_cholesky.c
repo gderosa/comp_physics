@@ -60,9 +60,12 @@ void cholesky_L_other(Matrix L, Matrix A, Index i, Index j) {
 
 void cholesky_L(Matrix L, Matrix A) {
 	Index i, j;
+	unsigned int progress_each_mask  = 0x0000007f;
 
 	for (i=0; i<N; i++) {
-		printf("Computing row #%d out of %d \t \r", i, N);
+		if (!(i & progress_each_mask))   
+			/* I/O is expensive: do not update too often */
+			fprintf(stderr, "Computing row #%d out of %d \t \r", i, N); 
 		for (j=0; j<N; j++) {
 			if ( i < j )
 				L[i][j] = 0.0;

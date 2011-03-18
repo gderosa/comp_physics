@@ -1,7 +1,7 @@
 # Tested with GCC on GNU/Linux
 
 CC=cc
-CFLAGS=-O2 -ansi
+CFLAGS=-O3 -ffast-math -ansi
 LINK=cc 
 LIBS=-lm
 OBJS=main.o mm.o io.o splines_cholesky.o
