@@ -31,7 +31,7 @@ void tridiag_simmetric_positive_init(Matrix A) {
 		}
 	}
 
-	/* free(h); */
+	free(h);
 }
 
 /* Algorithm should never make you read uninitialized values; otherwise

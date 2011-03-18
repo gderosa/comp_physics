@@ -22,10 +22,10 @@ int main() {
 
 	cholesky_L(L, A);
 	
-	printf("A = \n");
+	printf("\nA = \n"); 
 	matrix_print(A);
 
-	printf("\nL = \n");
+	printf("\nL = \n"); 
 	matrix_print(L);
 
 	matrix_free(A, N);
