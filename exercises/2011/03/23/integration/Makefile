@@ -1,7 +1,7 @@
 # Tested with GCC on GNU/Linux
 
 CXX=c++
-CXXFLAGS=-O3 -ffast-math -ansi
+CXXFLAGS=-O3 -ffast-math -ansi ${EXTRA_FLAGS} 
 LINK=c++ 
 LIBS=-lm
 OBJS=main.o integral/Base.o integral/Trapezoidal.o

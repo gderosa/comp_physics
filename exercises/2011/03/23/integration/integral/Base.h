@@ -9,9 +9,17 @@ namespace integral
 class Base 
 {
 public:
-  double (*function)(double x);
+  unsigned int nIntervals;
+  double lowerEnd;
+  double upperEnd;
+  double x(unsigned int i);
+  double deltaX();
+  double f(unsigned int i);
 
-  Base(double (*f)(double x));
+  Base(double (*integrand)(double x));
+
+protected:
+  double (*_integrand)(double x);
 };
 
 

@@ -13,7 +13,7 @@ class Trapezoidal: public Base
 {
 public:
   Trapezoidal(double (*f)(double x)): Base(f) {} // inherit the constructor
-  double test();
+  double compute();
 };
 
 

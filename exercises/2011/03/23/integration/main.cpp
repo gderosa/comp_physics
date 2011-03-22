@@ -17,6 +17,11 @@ int main()
 {
   integral::Trapezoidal integral(*f);
 
-  cout << integral.test() << endl;
+  integral.nIntervals = 100;
+  integral.lowerEnd   = -1.0;
+  integral.upperEnd   =  1.0;
+
+  cout << integral.compute() << endl;
+
   return 0;
 }
