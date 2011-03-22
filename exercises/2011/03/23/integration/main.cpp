@@ -16,12 +16,15 @@ double f(double x)
 int main() 
 {
   integral::Trapezoidal integral(*f);
+  unsigned int n;
 
-  integral.nIntervals = 100;
   integral.lowerEnd   = -1.0;
   integral.upperEnd   =  1.0;
 
-  cout << integral.compute() << endl;
+  for (n = 2; n <= 2048; n *= 2) { 
+    integral.nIntervals = n;
+    cout << n << "\t" << integral.compute() << endl;
+  }
 
   return 0;
 }
