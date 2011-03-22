@@ -4,16 +4,20 @@ CXX=c++
 CXXFLAGS=-O3 -ffast-math -ansi
 LINK=c++ 
 LIBS=-lm
-OBJS=main.o 
-EXE=integration
+OBJS=main.o integral/Base.o integral/Trapezoidal.o
+BINDIR=bin
+EXE=${BINDIR}/integration
 
 all: ${EXE}
 
-${EXE}: ${OBJS}
+${EXE}: ${OBJS} ${BINDIR}
 	${LINK} ${LIBS} -o ${EXE} ${OBJS}
 
-.o:
+.o: .h
 	${CXX} -c -o $*.o $< 
+
+${BINDIR}:
+	mkdir -p ${BINDIR}
 
 clean:
 	rm -f *.o ${EXE}
