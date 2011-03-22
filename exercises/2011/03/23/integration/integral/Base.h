@@ -8,7 +8,10 @@ namespace integral
 
 class Base 
 {
+public:
+  double (*function)(double x);
 
+  Base(double (*f)(double x));
 };
 
 

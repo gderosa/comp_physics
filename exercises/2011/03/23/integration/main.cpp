@@ -15,6 +15,8 @@ double f(double x)
 
 int main() 
 {
-  cout << f(0.0) << endl;
+  integral::Trapezoidal integral(*f);
+
+  cout << integral.test() << endl;
   return 0;
 }
