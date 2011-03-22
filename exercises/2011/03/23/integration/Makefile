@@ -20,5 +20,5 @@ ${BINDIR}:
 	mkdir -p ${BINDIR}
 
 clean:
-	rm -f *.o ${EXE}
+	rm -f *.o */*.o ${EXE}
 

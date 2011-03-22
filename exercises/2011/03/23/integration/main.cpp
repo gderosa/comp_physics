@@ -1,8 +1,9 @@
 // vim: set ts=2 sts=2 sw=2 et:
 
 #include <cmath>
-
 #include <iostream>
+
+#include "integral/Trapezoidal.h"
 
 using namespace std;
 
