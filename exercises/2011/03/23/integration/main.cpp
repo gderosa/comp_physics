@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 #include "integral/Trapezoidal.h"
 
@@ -21,9 +22,14 @@ int main()
   integral.lowerEnd   = -1.0;
   integral.upperEnd   =  1.0;
 
+  cout << setprecision(16);
+  cout << setiosflags(ios::left);
+
   for (n = 2; n <= 2048; n *= 2) { 
     integral.nIntervals = n;
-    cout << n << "\t" << integral.compute() << endl;
+    cout << 
+      setw(20) << integral.deltaX()   << 
+      setw(20) << integral.compute()  << endl;
   }
 
   return 0;
