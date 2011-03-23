@@ -4,9 +4,7 @@ CXX=c++
 CXXFLAGS=-O3 -ffast-math -ansi ${EXTRA_FLAGS} 
 LINK=c++ 
 LIBS=-lm
-OBJS=main.o \
-     integral/Base.o integral/Trapezoidal.o \
-     interpolator/Base.o interpolator/Polynomial.o
+OBJS=main.o integral/Base.o integral/Trapezoidal.o
 BINDIR=bin
 EXE=${BINDIR}/integration
 OUTDIR=output
