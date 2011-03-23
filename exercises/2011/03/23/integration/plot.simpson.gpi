@@ -1,0 +1,12 @@
+set xrange[0.0:0.5]
+
+set title 'Numerical (Simpson) integration of the Normal Distribution in [-sigma, sigma], with sigma=1'
+set xlabel 'Sub-interval width (also known as "h")'
+set ylabel 'Numerical Integral value'
+
+set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set output 'output/plot.simpson.pdf'
+plot \
+	'output/integrals.simpson.dat' w points linewidth 3, \
+	'output/extrapolation.simpson.dat' w lines linestyle 3
+

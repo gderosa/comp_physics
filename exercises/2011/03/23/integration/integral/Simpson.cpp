@@ -18,13 +18,13 @@ double Simpson::compute()
 
   for(j = 0; j < (nIntervals/2); j++) {
     sum += (
-          f(2*j)      + 
-      4 * f(2*j + 1)  +
-          f(2*j + 2)
+            f(2*j)      + 
+      4.0 * f(2*j + 1)  +
+            f(2*j + 2)
     );
   }
 
-  return sum;
+  return sum * (deltaX()/3.0); 
 }
 
 }
