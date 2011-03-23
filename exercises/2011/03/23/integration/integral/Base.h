@@ -16,7 +16,10 @@ public:
   double deltaX();
   double f(unsigned int i);
 
+  Base();
   Base(double (*integrand)(double x));
+
+  virtual double compute() {return 0.0;};
 
 protected:
   double (*_integrand)(double x);

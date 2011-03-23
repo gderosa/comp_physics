@@ -5,6 +5,11 @@
 namespace integral
 {
 
+Base::Base()
+{
+  _integrand = 0; // Null pointer
+}
+  
 Base::Base(double (*integrand)(double x))
 {
   _integrand = integrand; 

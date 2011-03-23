@@ -1,12 +1,13 @@
 // vim: set ts=2 sts=2 sw=2 et:
 
+#include <cstdlib>
 #include <cmath>
-#include <vector>
-#include <iostream>
+#include <cstring>
 #include <iomanip>
+#include <iostream>
 
 #include "integral/Trapezoidal.h"
-#include "interpolator/Polynomial.h"
+#include "integral/Simpson.h"
 
 using namespace std;
 
@@ -16,31 +17,34 @@ double f(double x)
   return (1/sqrt(2*M_PI)) * exp( -(x*x)/2 ); 
 }
 
-int main() 
+int main(int argc, char *argv[]) 
 {
-  vector< pair<double, double> > integralsByH;
-
-  integral::Trapezoidal integral(*f);
+  integral::Base * integral;
   unsigned int n;
 
-  integral.lowerEnd   = -1.0;
-  integral.upperEnd   =  1.0;
+  if ( (argc == 1) || (strcmp(argv[1], "trapezoidal") == 0) )
+    integral = new integral::Trapezoidal(*f);
+  else if ( strcmp(argv[1], "simpson") == 0 )
+    integral = new integral::Simpson(*f);
+  else {
+    cerr << "Invalid integration type '" << argv[1] << "'" << endl;
+    abort();
+  }
+
+  integral->lowerEnd   = -1.0;
+  integral->upperEnd   =  1.0;
 
   cout << setprecision(16);
   cout << setiosflags(ios::left);
 
   for (n = 4; n <= 512; n *= 2) { 
-    integral.nIntervals = n;
-    integralsByH.push_back( 
-      *(new pair<double, double>( 
-        integral.deltaX(), integral.compute() 
-      )) 
-    ); 
+    integral->nIntervals = n;
+    cout << 
+      setw(20) << integral->deltaX()   << 
+      setw(20) << integral->compute()  << endl;
   }
 
-  interpolator::Polynomial interpolator(integralsByH);
-
-  cout << interpolator.interpolate(0.0) << endl;
+  delete integral;
 
   return 0;
 }

@@ -5,13 +5,18 @@ CXXFLAGS=-O3 -ffast-math -ansi ${EXTRA_FLAGS}
 LINK=c++ 
 LIBS=-lm
 OBJS=main.o \
-     integral/Base.o integral/Trapezoidal.o \
-     interpolator/Base.o interpolator/Polynomial.o
+     integral/Base.o integral/Trapezoidal.o integral/Simpson.o
+
 BINDIR=bin
 EXE=${BINDIR}/integration
 OUTDIR=output
-OUTPUT_DATA=${OUTDIR}/extrapolation.dat ${OUTDIR}/integrals.dat
-PLOTS=${OUTDIR}/plot.pdf
+OUTPUT_DATA= \
+	${OUTDIR}/extrapolation.trapezoidal.dat \
+	${OUTDIR}/integrals.trapezoidal.dat \
+	${OUTDIR}/extrapolation.simpson.dat \
+	${OUTDIR}/integrals.simpson.dat
+		
+PLOTS=${OUTDIR}/plot.trapezoidal.pdf ${OUTDIR}/plot.simpson.pdf
 
 all: exe
 
@@ -31,7 +36,14 @@ clean:
 	rm -f *.o */*.o ${EXE}
 	rmdir ${BINDIR} 2> /dev/null
 
-#plot: ${PLOTS}
-#
-#${PLOTS}: output/extrapolation.dat output/integrals.dat plot.gpi
-#	gnuplot plot.gpi
+extrapolate: ${OUTPUT_DATA}
+
+${OUTPUT_DATA}: ${EXE} 
+	ruby ./extrapolate.rb trapezoidal
+	ruby ./extrapolate.rb simpson
+
+plot: ${PLOTS}
+
+${PLOTS}: ${OUTPUT_DATA} plot.trapezoidal.gpi plot.simpson.gpi
+	gnuplot plot.trapezoidal.gpi
+	gnuplot plot.simpson.gpi
