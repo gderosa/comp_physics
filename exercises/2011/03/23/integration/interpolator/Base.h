@@ -15,7 +15,7 @@ public:
   double x(unsigned int i);
   double y(unsigned int i);
 
-  Base(std::vector< std::pair<double, double> > points_);
+  Base(std::vector< std::pair<double, double> > & points_);
 protected:
   std::vector< std::pair<double, double> > points;
 };

@@ -1,10 +1,12 @@
 // vim: set ts=2 sts=2 sw=2 et:
 
 #include <cmath>
+#include <vector>
 #include <iostream>
 #include <iomanip>
 
 #include "integral/Trapezoidal.h"
+#include "interpolator/Polynomial.h"
 
 using namespace std;
 
@@ -16,6 +18,8 @@ double f(double x)
 
 int main() 
 {
+  vector< pair<double, double> > integralsByH;
+
   integral::Trapezoidal integral(*f);
   unsigned int n;
 
@@ -27,10 +31,16 @@ int main()
 
   for (n = 4; n <= 512; n *= 2) { 
     integral.nIntervals = n;
-    cout << 
-      setw(20) << integral.deltaX()   << 
-      setw(20) << integral.compute()  << endl;
+    integralsByH.push_back( 
+      *(new pair<double, double>( 
+        integral.deltaX(), integral.compute() 
+      )) 
+    ); 
   }
+
+  interpolator::Polynomial interpolator(integralsByH);
+
+  cout << interpolator.interpolate(0.0) << endl;
 
   return 0;
 }

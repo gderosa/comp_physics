@@ -14,9 +14,10 @@ class Polynomial: public Base
 public:
   unsigned int n; // polynomial degree
   Polynomial( // inherit the constructor
-      std::vector< std::pair<double, double> > points ): Base(points);
+      std::vector< std::pair<double, double> > & points );
+  double interpolate(double x);
 private:
-  double p_n(double x);
+  std::vector<double> p_n(double x);
 };
 
 

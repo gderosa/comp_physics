@@ -13,7 +13,7 @@ OUTDIR=output
 OUTPUT_DATA=${OUTDIR}/extrapolation.dat ${OUTDIR}/integrals.dat
 PLOTS=${OUTDIR}/plot.pdf
 
-all: exe extrapolate plot
+all: exe
 
 exe: ${EXE}
 
@@ -31,12 +31,7 @@ clean:
 	rm -f *.o */*.o ${EXE}
 	rmdir ${BINDIR} 2> /dev/null
 
-extrapolate: ${OUTPUT_DATA}
-
-${OUTPUT_DATA}: ${EXE} 
-	ruby ./extrapolate.rb
-
-plot: ${PLOTS}
-
-${PLOTS}: output/extrapolation.dat output/integrals.dat plot.gpi
-	gnuplot plot.gpi
+#plot: ${PLOTS}
+#
+#${PLOTS}: output/extrapolation.dat output/integrals.dat plot.gpi
+#	gnuplot plot.gpi
