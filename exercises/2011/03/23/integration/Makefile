@@ -31,10 +31,10 @@ clean:
 
 extrapolate: ${OUTPUT_DATA}
 
-${OUTPUT_DATA}:
+${OUTPUT_DATA}: ${EXE} 
 	ruby ./extrapolate.rb
 
 plot: ${PLOTS}
 
-${PLOTS}: output/extrapolation.dat output/integrals.dat
+${PLOTS}: output/extrapolation.dat output/integrals.dat plot.gpi
 	gnuplot plot.gpi
