@@ -12,12 +12,15 @@ require 'interpolator'
 
 BINDIR              = "#{DIR}/bin"
 OUTDIR              = "#{DIR}/output"
-INTEGRALS_FILE      = "#{OUTDIR}/integrals.dat"
-EXTRAPOLATION_FILE  = "#{OUTDIR}/extrapolation.dat"
+METHOD              = (ARGV[0] || 'trapezoidal')
+INTEGRALS_FILE      = "#{OUTDIR}/integrals.#{METHOD}.dat"
+EXTRAPOLATION_FILE  = "#{OUTDIR}/extrapolation.#{METHOD}.dat"
 
 FileUtils.mkdir_p OUTDIR
 
-system("#{BINDIR}/integration > #{INTEGRALS_FILE}")
+cmd = "#{BINDIR}/integration #{METHOD} > #{INTEGRALS_FILE}"
+puts cmd
+system(cmd)
 
 points = Array.new
 

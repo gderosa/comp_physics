@@ -22,8 +22,6 @@ int main(int argc, char *argv[])
   integral::Base * integral;
   unsigned int n;
 
-  //cout << "argc=" << argc << " argv[1]=" << argv[1] << endl;
-
   if ( (argc == 1) || (strcmp(argv[1], "trapezoidal") == 0) )
     integral = new integral::Trapezoidal(*f);
   else if ( strcmp(argv[1], "simpson") == 0 )

@@ -5,8 +5,8 @@ set xlabel 'Sub-interval width (also known as "h")'
 set ylabel 'Numerical Integral value'
 
 set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
-set output 'output/plot.pdf'
+set output 'output/plot.trapezoidal.pdf'
 plot \
-	'output/integrals.dat' w points linewidth 3, \
-	'output/extrapolation.dat' w lines linestyle 3
+	'output/integrals.trapezoidal.dat' w points linewidth 3, \
+	'output/extrapolation.trapezoidal.dat' w lines linestyle 3
 
