@@ -31,16 +31,21 @@ ${EXE}: ${OBJS} ${BINDIR}
 ${BINDIR}:
 	mkdir -p ${BINDIR}
 
+bin/interpolator:
+	make -f Makefile.interpolator
+
 clean:
-	rm -fr output
-	rm -f *.o */*.o ${EXE}
-	rmdir ${BINDIR} 2> /dev/null
+	rm -fr output ${BINDIR} || true
+	rm -f *.o */*.o || true
 
 extrapolate: ${OUTPUT_DATA}
 
-${OUTPUT_DATA}: ${EXE} 
-	ruby ./extrapolate.rb trapezoidal
-	ruby ./extrapolate.rb simpson
+${OUTPUT_DATA}: ${EXE} bin/interpolator
+	mkdir -p ${OUTDIR}	
+	bin/integration trapezoidal > output/integrals.trapezoidal.dat
+	bin/integration simpson     > output/integrals.simpson.dat
+	bin/interpolator 0 0.5 500 < output/integrals.trapezoidal.dat > output/extrapolation.trapezoidal.dat
+	bin/interpolator 0 0.5 500 < output/integrals.simpson.dat > output/extrapolation.simpson.dat
 
 plot: ${PLOTS}
 

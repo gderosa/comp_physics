@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <sstream>
+#include <iomanip>
 #include <iostream>
 
 #include "interpolator/Polynomial.h"
@@ -39,6 +40,8 @@ int main(int argc, char *argv[])
   }
 
   interpolator::Polynomial intpl(points);
+
+  cout << setprecision(16);
   
   double deltaX = (to - from)/(double)nSteps;
   for(i = 0; i <= nSteps; i++ ) {

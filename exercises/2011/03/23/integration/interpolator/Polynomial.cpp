@@ -19,7 +19,7 @@ Polynomial::Polynomial( // inherit the constructor
 std::vector<double> Polynomial::p_n(double x_)
 {
   unsigned int j, k;
-  std::vector<double> p_n_(n, 0.0);
+  std::vector<double> p_n_(n+1, 0.0);
 
   for (j=0; j<=n; j++) {
     p_n_[j] = 1.0;
