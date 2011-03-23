@@ -10,8 +10,13 @@ OBJS=main.o \
 BINDIR=bin
 EXE=${BINDIR}/integration
 OUTDIR=output
-OUTPUT_DATA=${OUTDIR}/extrapolation.dat ${OUTDIR}/integrals.dat
-PLOTS=${OUTDIR}/plot.pdf
+OUTPUT_DATA= \
+	${OUTDIR}/extrapolation.trapezoidal.dat \
+	${OUTDIR}/integrals.trapezoidal.dat \
+	${OUTDIR}/extrapolation.simpson.dat \
+	${OUTDIR}/integrals.simpson.dat
+		
+PLOTS=${OUTDIR}/plot.trapezoidal.pdf ${OUTDIR}/plot.simpson.pdf
 
 all: exe extrapolate plot
 
@@ -34,9 +39,11 @@ clean:
 extrapolate: ${OUTPUT_DATA}
 
 ${OUTPUT_DATA}: ${EXE} 
-	ruby ./extrapolate.rb
+	ruby ./extrapolate.rb trapezoidal
+	ruby ./extrapolate.rb simpson
 
 plot: ${PLOTS}
 
-${PLOTS}: output/extrapolation.dat output/integrals.dat plot.gpi
-	gnuplot plot.gpi
+${PLOTS}: ${OUTPUT_DATA} plot.trapezoidal.gpi plot.simpson.gpi
+	gnuplot plot.trapezoidal.gpi
+	gnuplot plot.simpson.gpi
