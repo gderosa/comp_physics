@@ -10,7 +10,7 @@ namespace interpolator
 {
 
 Polynomial::Polynomial( // inherit the constructor
-            std::vector< std::pair<double, double> > & points_ ): Base(points_)
+            std::vector< std::pair<double, double> > &points_ ): Base(points_)
 {
   n = points.size() - 1;
 }

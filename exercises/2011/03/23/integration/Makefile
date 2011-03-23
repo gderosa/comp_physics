@@ -18,7 +18,7 @@ OUTPUT_DATA= \
 		
 PLOTS=${OUTDIR}/plot.trapezoidal.pdf ${OUTDIR}/plot.simpson.pdf
 
-all: exe
+all: exe extrapolate plot
 
 exe: ${EXE}
 

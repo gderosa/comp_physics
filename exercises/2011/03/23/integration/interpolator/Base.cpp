@@ -8,7 +8,7 @@ namespace interpolator
 {
 
 
-Base::Base(std::vector< std::pair<double, double> > & points_)
+Base::Base(std::vector< std::pair<double, double> > &points_)
 {
   points = points_; 
 }
