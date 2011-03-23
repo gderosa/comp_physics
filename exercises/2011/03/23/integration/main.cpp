@@ -25,7 +25,7 @@ int main()
   cout << setprecision(16);
   cout << setiosflags(ios::left);
 
-  for (n = 2; n <= 2048; n *= 2) { 
+  for (n = 4; n <= 2048; n *= 2) { 
     integral.nIntervals = n;
     cout << 
       setw(20) << integral.deltaX()   << 
