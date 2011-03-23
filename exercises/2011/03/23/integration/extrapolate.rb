@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# NO LONGER USED: There's a C++ implementation actually.
+
 require 'fileutils'
 
 DIR = File.dirname(__FILE__)
