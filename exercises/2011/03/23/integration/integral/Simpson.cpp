@@ -9,14 +9,13 @@
 namespace integral 
 {
 
-// Assume there's an even number of intervals.
-// TODO: handle the odd case.
 double Simpson::compute()
 {
   unsigned int j;
   double sum = 0;
+  double trapezoidal_term = 0;
 
-  for(j = 0; j < (nIntervals/2); j++) {
+  for(j = 0; j < (nIntervals/2); j++) { // integers: 11/2 = 5
     sum += (
             f(2*j)      + 
       4.0 * f(2*j + 1)  +
@@ -24,7 +23,10 @@ double Simpson::compute()
     );
   }
 
-  return sum * (deltaX()/3.0); 
+  if (nIntervals & 1) // odd
+    trapezoidal_term = deltaX() * ( f(upperEnd) + f(upperEnd-deltaX()) ) / 2.0;
+
+  return sum * (deltaX()/3.0) + trapezoidal_term; 
 }
 
 }

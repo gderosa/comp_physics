@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   cout << setprecision(16);
   cout << setiosflags(ios::left);
 
-  for (n = (1 << 10); n < (1 << 17); n *= 2) { 
+  for (n = (1 << 12); n < (1 << 21); n *= 2) { 
     integral.nIntervals = n - 1;
     // exclude the last subinterval, where the f diverges
     integral.upperEnd = tetha_0[0] * ((double)(n - 1)/(double)n); 
