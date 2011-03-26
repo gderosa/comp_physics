@@ -12,17 +12,19 @@
 
 using namespace std;
 
-static const double tetha_0[] = {
-  M_PI/4, M_PI/8, M_PI/16, M_PI/32, M_PI/64, M_PI/128
-};
+// static const double theta_0[] = {
+//   M_PI/4, M_PI/8, M_PI/16, M_PI/32, M_PI/64, M_PI/128
+// };
+
+static double theta_0;
 
 // integral in ex 3.16 Pang
 double f(double theta) 
 {
-  return 1 / sqrt( cos(theta) - cos(tetha_0[0]) ); 
+  return 1 / sqrt( cos(theta) - cos(theta_0) ); 
 }
 
-double integrate(double tetha_0) 
+double integrate() 
 {
   integral::Trapezoidal integral(*f);
   unsigned int n; 
@@ -33,7 +35,7 @@ double integrate(double tetha_0)
   for (n = (1 << 13); n < (1 << 21); n *= 2) { 
     integral.nIntervals = n - 1;
     // exclude the last subinterval, where the f diverges
-    integral.upperEnd = tetha_0 * ((double)(n - 1)/(double)n); 
+    integral.upperEnd = theta_0 * ((double)(n - 1)/(double)n); 
     pair<double, double> point;
     point.first   = integral.deltaX();
     point.second  = integral.compute();
@@ -46,10 +48,22 @@ double integrate(double tetha_0)
 
 int main(int argc, char *argv[]) 
 {
-  int i;
-  for (i = 0; i < 6; i++) { 
-    cout << tetha_0[i] << "\t" << integrate(tetha_0[i]) << endl;
-  }
+  cout << setprecision(12);
+
+  cout << 
+    "# Expected value for small oscillations: " << 
+    M_PI/sqrt(2) << " (PI/sqrt(2))" << endl;
+
+  unsigned int n = 4; 
+  do {
+    theta_0 = M_PI/n ; // PI/(powers of 2) 
+    cout << 
+      setw(19) << theta_0       << 
+      setw(19) << integrate()   << 
+      setw(19) << " # theta_0=PI/" << n << 
+      endl;
+    n *= 2;
+  } while(theta_0 > 1e-6);
 
   return 0;
 }
