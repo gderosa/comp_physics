@@ -1,0 +1,9 @@
+set xlabel 'Sub-interval width h'
+set ylabel 'Numerical Integral value I(h)' 
+
+set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set output 'output/plot.pendulum.pdf'
+plot \
+	'output/integrals.pendulum.dat' w points linewidth 3, \
+	'output/extrapolation.pendulum.dat' w lines linestyle 3
+
