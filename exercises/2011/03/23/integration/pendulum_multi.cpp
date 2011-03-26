@@ -12,11 +12,7 @@
 
 using namespace std;
 
-// static const double theta_0[] = {
-//   M_PI/4, M_PI/8, M_PI/16, M_PI/32, M_PI/64, M_PI/128
-// };
-
-static double theta_0;
+static double theta_0 = M_PI/4.0;
 
 // integral in ex 3.16 Pang
 double f(double theta) 
@@ -26,7 +22,7 @@ double f(double theta)
 
 double integrate() 
 {
-  integral::Simpson integral(*f);
+  integral::Simpson integral(&f);
   unsigned int n; 
   vector< pair<double, double> > extrapolation_points;
 
@@ -43,7 +39,7 @@ double integrate()
   }
 
   interpolator::Polynomial intpl(extrapolation_points);
-  return intpl.interpolate(0);
+  return intpl.interpolate(0.0);
 }
 
 int main(int argc, char *argv[]) 
