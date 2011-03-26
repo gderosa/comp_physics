@@ -26,13 +26,13 @@ double f(double theta)
 
 double integrate() 
 {
-  integral::Trapezoidal integral(*f);
+  integral::Simpson integral(*f);
   unsigned int n; 
   vector< pair<double, double> > extrapolation_points;
 
   integral.lowerEnd = 0.0;
 
-  for (n = (1 << 13); n < (1 << 21); n *= 2) { 
+  for (n = (1 << 8); n < (1 << 22); n *= 2) { 
     integral.nIntervals = n - 1;
     // exclude the last subinterval, where the f diverges
     integral.upperEnd = theta_0 * ((double)(n - 1)/(double)n); 

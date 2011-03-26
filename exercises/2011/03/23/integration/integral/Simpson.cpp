@@ -24,7 +24,7 @@ double Simpson::compute()
   }
 
   if (nIntervals & 1) // odd
-    trapezoidal_term = deltaX() * ( f(upperEnd) + f(upperEnd-deltaX()) ) / 2.0;
+    trapezoidal_term = deltaX() * ( f(nIntervals-1) + f(nIntervals-2) ) / 2.0;
 
   return sum * (deltaX()/3.0) + trapezoidal_term; 
 }
