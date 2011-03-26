@@ -60,10 +60,10 @@ int main(int argc, char *argv[])
     cout << 
       setw(19) << theta_0       << 
       setw(19) << integrate()   << 
-      setw(19) << " # theta_0=PI/" << n << 
+      setw(19) << " # theta_0 = PI/" << n << 
       endl;
     n *= 2;
-  } while(theta_0 > 1e-6);
+  } while(theta_0 > M_PI/128); 
 
   return 0;
 }

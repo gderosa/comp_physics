@@ -10,14 +10,12 @@ OBJS=pendulum_multi.o \
 BINDIR=bin
 EXE=${BINDIR}/pendulum_multi
 
-#OUTDIR=output
-#OUTPUT_DATA= \
-#	${OUTDIR}/extrapolation.pendulum.dat \
-#	${OUTDIR}/integrals.pendulum.dat \
-#		
-#PLOTS=${OUTDIR}/plot.pendulum.pdf 
+OUTDIR=output
+OUTPUT_DATA= \
+	${OUTDIR}/pendulum_multi.dat 
+PLOTS=${OUTDIR}/plot.pendulum_multi.pdf 
 
-all: exe 
+all: exe plot
 
 exe: ${EXE}
 
@@ -30,22 +28,16 @@ ${EXE}: ${OBJS} ${BINDIR}
 ${BINDIR}:
 	mkdir -p ${BINDIR}
 
-#bin/interpolator:
-#	make -f Makefile.interpolator
-
 clean:
 	rm -fr output ${BINDIR} || true
 	rm -f *.o */*.o || true
 
-#extrapolate: ${OUTPUT_DATA}
-#
-#${OUTPUT_DATA}: ${EXE} bin/interpolator
-#	mkdir -p ${OUTDIR}	
-#	bin/pendulum > output/integrals.pendulum.dat
-#	bin/interpolator 0 1e-4 1000 < output/integrals.pendulum.dat > output/extrapolation.pendulum.dat
-#
-#plot: ${PLOTS}
+${OUTPUT_DATA}: ${EXE} 
+	mkdir -p ${OUTDIR}	
+	bin/pendulum_multi > ${OUTPUT_DATA}
 
-#${PLOTS}: ${OUTPUT_DATA} plot.pendulum.gpi 
-#	gnuplot plot.pendulum.gpi
-#
+plot: ${PLOTS}
+
+${PLOTS}: ${OUTPUT_DATA} plot.pendulum_multi.gpi 
+	gnuplot plot.pendulum_multi.gpi
+
