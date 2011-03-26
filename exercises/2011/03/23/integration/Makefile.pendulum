@@ -41,7 +41,7 @@ extrapolate: ${OUTPUT_DATA}
 ${OUTPUT_DATA}: ${EXE} bin/interpolator
 	mkdir -p ${OUTDIR}	
 	bin/pendulum > output/integrals.pendulum.dat
-	bin/interpolator 0 5e-5 700 < output/integrals.pendulum.dat > output/extrapolation.pendulum.dat
+	bin/interpolator 0 1e-4 1000 < output/integrals.pendulum.dat > output/extrapolation.pendulum.dat
 
 plot: ${PLOTS}
 
