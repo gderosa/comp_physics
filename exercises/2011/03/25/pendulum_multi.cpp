@@ -1,14 +1,11 @@
 // vim: set ts=2 sts=2 sw=2 et:
 
-#include <cstdlib>
 #include <cmath>
-#include <cstring>
-#include <functional>
 #include <iomanip>
 #include <iostream>
 
 #include "function/Base.h"
-#include "integral/Trapezoidal.h"
+//#include "integral/Trapezoidal.h"
 #include "integral/Simpson.h"
 #include "interpolator/Polynomial.h"
 
