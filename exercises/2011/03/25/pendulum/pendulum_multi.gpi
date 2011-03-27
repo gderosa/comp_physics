@@ -3,15 +3,10 @@ set ylabel 'Integral in pendulum formula'
 
 set xrange[0:pi/4]
 
-set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set terminal pdf font 'Helvetica,8' size 17.0cm, 11.0cm # A4 paper
 set output 'output/plot.pendulum_multi.pdf'
 plot \
-	'output/pendulum_multi.dat' w points linewidth 3, \
-	pi/sqrt(2) w lines linestyle 3
+	'output/pendulum_multi.dat' w points linewidth 2, \
+	pi/sqrt(2) w lines linestyle 3 linewidth 2
 
-set terminal postscript eps color font 'Helvetica,11' # size 29.7cm, 21.0cm # A4 paper
-set output 'output/plot.pendulum_multi.eps'
-plot \
-	'output/pendulum_multi.dat' w points linewidth 3, \
-  pi/sqrt(2) w lines linestyle 3
 
