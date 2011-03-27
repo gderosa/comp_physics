@@ -1,12 +1,12 @@
 // vim: set ts=2 sts=2 sw=2 et:
 
-#include <cstdlib>
+// #include <cstdlib>
 #include <cmath>
-#include <cstring>
+// #include <cstring>
 #include <iomanip>
 #include <iostream>
 
-#include "integral/Trapezoidal.h"
+// #include "integral/Trapezoidal.h"
 #include "integral/Simpson.h"
 #include "interpolator/Polynomial.h"
 
@@ -17,16 +17,16 @@ class PendulumFunction
 public:
   double theta_0;
 
-  PendulumFunction(double theta_0_) {theta_0 = theta_0_;}
+  PendulumFunction(const double theta_0_) {theta_0 = theta_0_;}
 
   // integral in ex 3.16 Pang
-  double operator()(double theta) 
+  double operator()(const double theta) 
   {
     return 1 / sqrt( cos(theta) - cos(theta_0) ); 
   }
 };
 
-double integrate(double theta_0) 
+double integrate(const double theta_0) 
 {
   PendulumFunction f(theta_0);
   integral::Simpson<PendulumFunction> integral(&f);
@@ -39,9 +39,9 @@ double integrate(double theta_0)
     integral.nIntervals = n - 1;
     // exclude the last subinterval, where the f diverges
     integral.upperEnd = theta_0 * ((double)(n - 1)/(double)n); 
-    pair<double, double> point;
-    point.first   = integral.deltaX();
-    point.second  = integral.compute();
+    pair<double, double> point(
+        integral.deltaX(), integral.compute()
+    );
     extrapolation_points.push_back(point);
   }
 
@@ -49,7 +49,7 @@ double integrate(double theta_0)
   return intpl.interpolate(0.0);
 }
 
-int main(int argc, char *argv[]) 
+int main(const int argc, const char *argv[]) 
 {
   cout << setprecision(12);
 

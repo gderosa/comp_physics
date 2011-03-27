@@ -6,6 +6,7 @@
 namespace integral 
 {
 
+
 template <class FunctionClass>
 class Base 
 {
@@ -14,20 +15,30 @@ public:
   double        lowerEnd;
   double        upperEnd;
 
-  double x(unsigned int i)  { return lowerEnd + i * deltaX();             }
-  double deltaX()           { return (upperEnd - lowerEnd) / nIntervals;  }
-  double f(unsigned int i)  { return (*_integrand)(x(i));                 }
+  double x(const unsigned int i)  
+  { 
+    return lowerEnd + i * deltaX();
+  }
+  double deltaX()
+  { 
+    return (upperEnd - lowerEnd) / nIntervals; 
+  }
+  double f(const unsigned int i)
+  { 
+    return (*_integrand)(x(i));
+  }
 
-  Base()                          { _integrand = 0;           }
-  Base(FunctionClass * integrand) { _integrand = integrand;   } 
+  Base() : _integrand(0) {} // NULL                         
+  Base(FunctionClass * integrand) : _integrand(integrand) {} 
 
-  virtual double compute()        { return 0.0;               } 
+  virtual double compute()
+  { 
+    return 0.0;               
+  } 
 
 protected:
   FunctionClass * _integrand; 
 };
-
-
 
 
 }
