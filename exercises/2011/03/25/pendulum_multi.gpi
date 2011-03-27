@@ -1,0 +1,11 @@
+set xlabel 'Oscillation width theta_0'
+set ylabel 'Integral in pendulum formula' 
+
+set xrange[0:pi/4]
+
+set terminal pdf font 'Helvetica,11' size 29.7cm, 21.0cm # A4 paper
+set output 'output/plot.pendulum_multi.pdf'
+plot \
+	'output/pendulum_multi.dat' w points linewidth 3, \
+	pi/sqrt(2) w lines linestyle 3
+
