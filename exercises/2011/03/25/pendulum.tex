@@ -1,6 +1,8 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper]{article}
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath}
+
 \author{Guido De Rosa}
 
 \begin{document}
@@ -12,12 +14,37 @@
 \section{Introduzione}
 
 L'energia totale di un pendolo semplice è pari all'energia potenziale
-nel punto di massima altezza.
+nel punto di massima altezza:
+\begin{equation*}
+  E = mgh = mg(l - l\cos{\theta_0}) .
+\end{equation*}
+Per la conservzione dell'energia, nel corso dell'oscillazione è 
+\[
+  E = mg(l - l\cos{\theta}) + \frac{1}{2}mv^2 . 
+\]
+Confrontando le ultime due equazioni segue che
+\[
+  v = \sqrt{2g(\cos{\theta} - \cos{\theta_0})} ,
+\] 
+ed esprimendo la velocità $v$ come $l\frac{d\theta}{dt}$ si ottiene facilmente:
+\[
+  dt = \sqrt{\frac{l}{2g}}\frac{d\theta}{\sqrt{\cos{\theta} - \cos{\theta_0} }} .
+\]
+Integrare in $\theta$ fra $0$ e $\theta_0$ equivale a considerare un quarto di periodo, 
+dunque:
+\[
+  T = 4 \sqrt{\frac{l}{2g}} \int_{0}^{\theta_0}\frac{d\theta}{\sqrt{\cos{\theta}-\cos{\theta_0}}}
+\]
 
-\begin{equation}
-  E = mgh = mg(l - l\cos{\theta_0}) \label{eq:aaa} 
-\end{equation}
-
-adsdsf \ref{eq:aaa}
-
+Si vuole confrontare questa espressione con l'approssimazione di oscillatore armonico, 
+secondo la quale per piccoli valori di $\theta_0$ è:
+\[
+  T \simeq 2\pi \sqrt{\frac{l}{g}} ,
+\]
+il che si riconduce, dal punto di vista del calcolo, a verificare la bontà 
+dell'approssimazione
+\[
+  \frac{\pi}{\sqrt{2}} \simeq \int_{0}^{\theta_0}\frac{d\theta}{\sqrt{\cos{\theta}-\cos{\theta_0}}}
+\]
+per valori semper più piccoli di $\theta_0$.
 \end{document}
