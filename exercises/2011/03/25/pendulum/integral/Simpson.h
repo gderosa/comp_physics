@@ -13,7 +13,7 @@ class Simpson: public Base
 {
 public:
 
-  Simpson(function::Base *f): Base(f) {} // inherit the constructor
+  Simpson(function::Base * const f): Base(f) {} // inherit the constructor
 
   double compute()
   {

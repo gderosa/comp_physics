@@ -13,7 +13,7 @@ class Trapezoidal: public Base
 {
 public:
   
-  Trapezoidal(function::Base *f): Base(f) {} // inherit the constructor
+  Trapezoidal(function::Base * const f): Base(f) {} // inherit the constructor
   
   double compute()
   {
