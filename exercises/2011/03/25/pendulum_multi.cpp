@@ -3,25 +3,33 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 
+#include "function/Base.h"
 #include "integral/Trapezoidal.h"
 #include "integral/Simpson.h"
 #include "interpolator/Polynomial.h"
 
 using namespace std;
 
-static double theta_0 = M_PI/4.0;
+//static double theta_0 = M_PI/4.0;
 
 // integral in ex 3.16 Pang
-double f(double theta) 
+struct PendulumIntegrand : public function::Base
 {
-  return 1 / sqrt( cos(theta) - cos(theta_0) ); 
-}
+  double theta_0;
+  PendulumIntegrand(double theta_0_) {theta_0 = theta_0_;}  
+  double operator()(double theta) 
+  {
+    return 1 / sqrt( cos(theta) - cos(theta_0) );
+  }
+};
 
-double integrate() 
+double integrate(double theta_0) 
 {
+  PendulumIntegrand f(theta_0);
   integral::Simpson integral(&f);
   unsigned int n; 
   vector< pair<double, double> > extrapolation_points;
@@ -51,11 +59,12 @@ int main(int argc, char *argv[])
     M_PI/sqrt(2) << " (PI/sqrt(2))" << endl;
 
   unsigned int n = 4; 
+  double theta_0;
   do {
     theta_0 = M_PI/n ; // PI/(powers of 2) 
     cout << 
       setw(19) << theta_0       << 
-      setw(19) << integrate()   << 
+      setw(19) << integrate(theta_0)   << 
       setw(19) << " # theta_0 = PI/" << n << 
       endl;
     n *= 2;

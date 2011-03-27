@@ -3,6 +3,8 @@
 #ifndef INTEGRAL_BASE_H
 #define INTEGRAL_BASE_H
 
+#include "../function/Base.h"
+
 namespace integral 
 {
 
@@ -17,12 +19,12 @@ public:
   double f(unsigned int i);
 
   Base();
-  Base(double (*integrand)(double x));
+  Base(function::Base *integrand); 
 
   virtual double compute() {return 0.0;};
 
 protected:
-  double (*_integrand)(double x);
+  function::Base * _integrand;
 };
 
 

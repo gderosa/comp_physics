@@ -12,7 +12,7 @@ namespace integral
 class Simpson: public Base 
 {
 public:
-  Simpson(double (*f)(double x)): Base(f) {} // inherit the constructor
+  Simpson(function::Base *f): Base(f) {} // inherit the constructor
   double compute();
 };
 

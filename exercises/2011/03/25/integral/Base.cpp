@@ -10,7 +10,7 @@ Base::Base()
   _integrand = 0; // Null pointer
 }
   
-Base::Base(double (*integrand)(double x))
+Base::Base(function::Base *integrand) 
 {
   _integrand = integrand; 
 }
