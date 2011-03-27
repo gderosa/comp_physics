@@ -5,7 +5,6 @@ CXXFLAGS=-O3 -ffast-math -ansi ${EXTRA_FLAGS}
 LINK=c++ 
 LIBS=-lm
 OBJS=pendulum_multi.o \
-     integral/Base.o integral/Trapezoidal.o integral/Simpson.o \
 		 interpolator/Base.o interpolator/Polynomial.o
 BINDIR=bin
 EXE=${BINDIR}/pendulum_multi

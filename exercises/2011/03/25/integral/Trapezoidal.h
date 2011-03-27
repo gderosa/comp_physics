@@ -9,11 +9,27 @@
 namespace integral 
 {
 
-class Trapezoidal: public Base 
+template <class FunctionClass>
+class Trapezoidal: public Base<FunctionClass> 
 {
 public:
-  Trapezoidal(double (*f)(double x)): Base(f) {} // inherit the constructor
-  double compute();
+
+  Trapezoidal(FunctionClass * f): Base<FunctionClass>(f) {} 
+
+  double compute()
+  {
+    unsigned int i;
+    double sum = 0;
+
+    for(i=0; i<this->nIntervals; i++) {
+      sum += (
+        (this->f(i) + this->f(i+1)) * this->deltaX() / 2
+      );
+    }
+
+    return sum;
+  }
+
 };
 
 
