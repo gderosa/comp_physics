@@ -11,13 +11,13 @@
 
 using namespace std;
 
-//static double theta_0 = M_PI/4.0;
-
 // integral in ex 3.16 Pang
 struct PendulumIntegrand : public function::Base
 {
   double theta_0;
-  PendulumIntegrand(const double theta_0_) {theta_0 = theta_0_;}  
+
+  PendulumIntegrand(const double theta_0_) : theta_0(theta_0_) {} 
+
   double operator()(const double theta) 
   {
     return 1 / sqrt( cos(theta) - cos(theta_0) );
