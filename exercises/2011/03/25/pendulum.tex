@@ -56,8 +56,9 @@ per valori sempre più piccoli di $\theta_0$.
 Si sono scelti valori di $\theta_0$ pari a $\frac{\pi}{4}$, $\frac{\pi}{8}$,
 $\frac{\pi}{16}$, $\frac{\pi}{32}$, $\frac{\pi}{64}$ e $\frac{\pi}{128}$.  
 
-Per ciascun valore di $\theta_0$, si è suddiviso il dominio di integrazione in sottointervalli
-di ampiezza $h = \theta_0/2^{n}$, facendo variare $n$ da $2^{8}$ a $2^{22}$, come si può
+Per ciascun valore di $\theta_0$, si è suddiviso il dominio di integrazione 
+$(0, \theta_0)$ in sottointervalli
+di ampiezza $h = \theta_0/2^{n}$, facendo variare $n$ da $8$ a $22$, come si può
 vedere da questo estratto del file \texttt{pendulum\_multi.cpp}:
 \begin{lstlisting} 
   for (n = (1 << 8); n < (1 << 22); n *= 2) {
@@ -65,8 +66,8 @@ vedere da questo estratto del file \texttt{pendulum\_multi.cpp}:
     // exclude the last subinterval, where the f diverges
     integral.upperEnd = theta_0 * ((double)(n - 1)/(double)n);
 \end{lstlisting}
-dove si vede anche che si è dovuto escludere l'ultimo intervallino, dove l'integrando
-diverge.
+dove si vede anche che si è dovuto escludere l'ultimo intervallino, dove 
+l'integrando diverge.
 
 I valori dell'integrale $I(h)$ così ottenuti sono poi estrapolati per 
 $h\rightarrow0$ (estrapolazione polinomiale):
@@ -95,7 +96,13 @@ double integrate(const double theta_0)
 }
 \end{lstlisting}
 
+Il codice sopra riportato invoca metodi di una libreria appositamente 
+realizzata, il cui sorgente è nelle directory 
+\texttt{integral/} e \texttt{interpolator/}.
+
 \section{Risultati}
+Di seguito è riportato l'output del progamma, i dati ottenuti sono
+rappresentati graficamente in Fig. \ref{fig:plot}.
 \begin{lstlisting}
 # Expected value for small oscillations: 2.22144146908 (PI/sqrt(2))
      0.785398163397       2.3095244447    # theta_0 = PI/4
@@ -105,8 +112,18 @@ double integrate(const double theta_0)
     0.0490873852123      2.22109705354    # theta_0 = PI/64
     0.0245436926062      2.22084620366    # theta_0 = PI/128
 \end{lstlisting}
-\begin{center}\begin{figure}\begin{center}
-\includegraphics[width=130mm]{plot.pdf}
-\end{center}\end{figure}\end{center}
+\begin{center}
+  \begin{figure}
+
+    \begin{center}
+      \includegraphics[width=130mm]{plot.pdf}
+    \end{center}
+
+    \caption{ Verifica dell'approssimazione $ \frac{\pi}{\sqrt{2}} \simeq \int_{0}^{\theta_0}\frac{d\theta}{\sqrt{\cos{\theta}-\cos{\theta_0}}} $ per $ \theta_0~=~\frac{\pi}{4}, \frac{\pi}{8}, \frac{\pi}{16}, \frac{\pi}{32}, \frac{\pi}{64}, \frac{\pi}{128} $.  }
+    
+    \label{fig:plot}
+    
+  \end{figure}
+\end{center}
 
 \end{document}
