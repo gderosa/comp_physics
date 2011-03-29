@@ -3,7 +3,7 @@
 #ifndef INTEGRAL_BASE_H
 #define INTEGRAL_BASE_H
 
-#include <list>
+#include <cstdlib>
 
 #include <iostream>
 
@@ -16,27 +16,49 @@ class Binary
 {
 public:
   unsigned int order;
-  std::list<double> values; // Habemus Cache!
-  unsigned int nIntervals() {return 1<<order;};
+  unsigned int maxOrder;
+  
+  // Cache!
+  //std::list<double> values; 
+  
+  // Cache!
+  double * values; // C arrays should be faster?
+
+  unsigned int nIntervals()     {return 1<<order;};
+  unsigned int maxNIntervals()  {return 1<<maxOrder;};
   double lowerEnd;
   double upperEnd;
 
   Binary(
       function::Base * const integrand,
       const double lowerEnd_, const double upperEnd_,
-      const unsigned int initialOrder
+      const unsigned int initialOrder, const unsigned int maxOrder_
   ) :
       _integrand(integrand), 
       lowerEnd(lowerEnd_), upperEnd(upperEnd_),
-      order(initialOrder),
-      values()
+      order(initialOrder), maxOrder(maxOrder_)
   {
+    values = (double*)std::malloc( ( maxNIntervals() + 1) * sizeof(double) );
+    // store the first
+    values[0] = discrete_evaluate(0); 
+    // store the others
+    size_t stepsInDiscreteCache = 1 << (maxOrder - order) ;
     size_t i;
-    for(i = 0; i < (1<<initialOrder) ; i++) {
-      values.push_back(discrete_evaluate(i));
+    for (
+        i = stepsInDiscreteCache; 
+        i < maxNIntervals() ; 
+        i += stepsInDiscreteCache
+    ) {
+      values[i] = discrete_evaluate(i);
     }
-    values.push_back((*_integrand)(upperEnd)); 
+    // store the last
+    values[maxNIntervals()] = ((*_integrand)(upperEnd)); 
   } 
+
+  ~Binary() 
+  {
+    std::free(values);
+  }
 
   double deltaX()                 
   { 
@@ -47,14 +69,25 @@ public:
 
   void refineDiscretization()
   {
-    std::list<double>::iterator it = values.begin();
-    double x = lowerEnd + deltaX()/2;
-    ++it;
-    while ( it != values.end() ) {
-      values.insert(it, (*_integrand)(x));
-      x += deltaX();
-      ++it;
-    }
+    if (order < maxOrder) {
+      // 
+      // _ = uninitialized
+      // * = filled
+      //
+      // * _ _ _ * _ _ _ * // before 
+      // * _ * _ * _ * _ * // after  
+      size_t stepsInDiscreteCache = 1 << (maxOrder - order) ;
+      size_t i;
+      for (
+          i = stepsInDiscreteCache/2;
+          i < maxNIntervals() ;
+          i += stepsInDiscreteCache
+      ) {
+        values[i] = discrete_evaluate(i);
+      }
+    } else
+      throw "Couldn't refineDiscretization() !!";
+
     ++order;
   }
 
@@ -64,7 +97,7 @@ protected:
   double discrete_evaluate(const size_t i)
   {
     return (*_integrand)(
-        lowerEnd + i * (upperEnd-lowerEnd)/nIntervals()
+        lowerEnd + i * (upperEnd-lowerEnd)/maxNIntervals()
     );
   }
 

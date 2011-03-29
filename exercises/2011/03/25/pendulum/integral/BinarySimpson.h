@@ -14,29 +14,28 @@ class BinarySimpson: public Binary
 {
 public:
 
-  BinarySimpson(
+  // inherit the constructor
+  BinarySimpson( 
       function::Base * const f, 
       const double lowerEnd, const double upperEnd,
-      const unsigned int order
-  ): Binary(f, lowerEnd, upperEnd, order) {} // inherit the constructor
+      const unsigned int order, const unsigned int maxOrder
+  ): Binary(f, lowerEnd, upperEnd, order, maxOrder) {} 
+
+  // inherit the destructor
+  //~BinarySimpson(): ~Binary() {}
 
   double compute()
   {
-    std::list<double>::iterator it = values.begin();
-    double sum = *it; 
-
-    ++it;
-    while(it != values.end()) { 
-      sum += 4.0 * (*it);
-      ++it;
-      sum += 2.0 * (*it);
-      ++it;
-    }
-    sum -= (*it);
-
-    // // Does not apply
-    //if (nIntervals & 1) // odd
-    //  trapezoidal_term = deltaX() * ( f(nIntervals-1) + f(nIntervals-2) ) / 2.0;
+    double sum = values[0];
+    size_t i;
+    size_t stepsInDiscreteCache = 1 << (maxOrder - order) ;
+    for (
+        i = stepsInDiscreteCache;
+        i < maxNIntervals() ;
+        i += 2 * stepsInDiscreteCache
+    )
+      sum += ( 4.0 * values[i] + 2.0 * values[i + stepsInDiscreteCache]) ;
+    sum -= values[maxNIntervals()];
 
     return sum * deltaX() / 3.0 ;
   }

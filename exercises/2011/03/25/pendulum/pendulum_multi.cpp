@@ -20,15 +20,14 @@ struct PendulumIntegrand : public function::Base
 
   double operator()(const double theta) 
   {
-    return 1 / sqrt( cos(theta) - cos(theta_0) + 1e-10);
-    //return 1.0;
+    return 1 / sqrt( cos(theta) - cos(theta_0) + 1e-12);
   }
 };
 
 double integrate(const double theta_0) 
 {
   PendulumIntegrand f(theta_0);
-  integral::BinarySimpson binaryIntegral(&f, 0.0, theta_0, 8);
+  integral::BinarySimpson binaryIntegral(&f, 0.0, theta_0, 8, 22);
   vector< pair<double, double> > extrapolation_points;
 
   while (binaryIntegral.order < 22) { 
