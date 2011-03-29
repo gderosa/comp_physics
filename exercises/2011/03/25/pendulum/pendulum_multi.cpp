@@ -6,7 +6,7 @@
 
 #include "function/Base.h"
 //#include "integral/Trapezoidal.h"
-#include "integral/Simpson.h"
+#include "integral/BinarySimpson.h"
 #include "interpolator/Polynomial.h"
 
 using namespace std;
@@ -20,27 +20,23 @@ struct PendulumIntegrand : public function::Base
 
   double operator()(const double theta) 
   {
-    return 1 / sqrt( cos(theta) - cos(theta_0) );
+    return 1 / sqrt( cos(theta) - cos(theta_0) + 1e-10);
+    //return 1.0;
   }
 };
 
 double integrate(const double theta_0) 
 {
   PendulumIntegrand f(theta_0);
-  integral::Simpson integral(&f);
-  unsigned int n; 
+  integral::BinarySimpson binaryIntegral(&f, 0.0, theta_0, 8);
   vector< pair<double, double> > extrapolation_points;
 
-  integral.lowerEnd = 0.0;
-
-  for (n = (1 << 8); n < (1 << 22); n *= 2) { 
-    integral.nIntervals = n - 1;
-    // exclude the last subinterval, where the f diverges
-    integral.upperEnd = theta_0 * ((double)(n - 1)/(double)n); 
+  while (binaryIntegral.order < 22) { 
     pair<double, double> point(
-        integral.deltaX(), integral.compute() 
+        binaryIntegral.deltaX(), binaryIntegral.compute() 
     );
     extrapolation_points.push_back(point);
+    binaryIntegral.refineDiscretization();
   }
 
   interpolator::Polynomial intpl(extrapolation_points);
