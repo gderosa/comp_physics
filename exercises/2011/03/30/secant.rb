@@ -38,6 +38,7 @@ include Math
 
 f = lambda {|x| cos(exp(x)) + sin(2*x) - 0.035}
 
+=begin
 zs = Zero::Secant.new(
   :lower  => -8.0,
   :upper  => 2.0,
@@ -47,16 +48,16 @@ zs = Zero::Secant.new(
 zs.each do |low, up, pivt, val|
   puts "In [#{low}..#{up}], f(#{pivt}) = #{val}" 
 end
+=end
 
 
-
-500.times do |i|
-  print "# #{i}:\t" 
-  two_points = [-8.0 + 10.0*rand, -8.0 + 10.0*rand]
+2048.times do |i|
+  # print "# #{i}:\t" 
+  two_points = [-8.0 + 12.0*rand, -8.0 + 12.0*rand]
   zero = Zero::Secant.new(
     :lower  => two_points.min,
     :upper  => two_points.max,
     &f
-  ).find and print zero
-  puts
+  )
+  x_zero = zero.find and puts "#{x_zero} #{zero.value}"
 end
