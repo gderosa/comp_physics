@@ -1,0 +1,6 @@
+
+set terminal pdf font 'Helvetica,8' size 17.0cm, 11.0cm # A4 paper
+set output 'plot.pdf'
+set samples 10000
+plot  cos(exp(x)) + sin(2*x) - 0.035, 0, 'zero.dat'
+
