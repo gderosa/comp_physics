@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Vector.h"
+#include "../../la/Vector.h"
 
 using namespace std;
 
