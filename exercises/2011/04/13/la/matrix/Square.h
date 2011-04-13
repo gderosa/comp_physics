@@ -4,17 +4,17 @@
 
 //#include "../Vector.h"
 
-// vector operations : TODO: move to a separate file
-
-template<typename T>
-T operator*(const std::vector<T> first, std::vector<T> second )
-{
-  size_t i;
-  T sum = (T)0;
-  for (i=0; i<first.size(); i++)
-    sum += first[i] * second[i];
-  return sum;
-}
+// // vector operations : TODO: move to a separate file
+//
+// template<typename T>
+// T operator*(const std::vector<T> first, const std::vector<T> second )
+// {
+//   size_t i;
+//   T sum = (T)0;
+//   for (i=0; i<first.size(); i++)
+//     sum += first[i] * second[i];
+//   return sum;
+// }
 
 
 namespace la
@@ -69,18 +69,19 @@ private:
 
 // matrix operations
 template <typename T, size_t N>
-Square<T, N> & operator*(Square<T, N> & A, Square<T, N> & B)
+Square<T, N> operator*(Square<T, N> & A, Square<T, N> & B) 
+  // const correctness is not possible here
 {
-  Square<T, N> * Result = new Square<T, N>;
+  Square<T, N> Result;
   size_t i, j, k;
   for (i=0; i<N; i++) {
     for (j=0; j<N; j++) {
       for (k=0; k<N; k++) {
-        (*Result)[i][j] += A[i][k] * B[k][j];
+        Result[i][j] += A[i][k] * B[k][j];
       }
     }
   }
-  return (*Result);
+  return Result;
 }
 
 }
@@ -99,7 +100,8 @@ std::ostream& operator<<(std::ostream& cout, la::matrix::Square<T, N> A)
     for (j=0; j<N; j++) {
       cout << A[i][j] << ' ';
     }
-    cout << std::endl;
+    if (i < N-1) 
+      cout << std::endl;
   }
   return cout;
 }

@@ -13,7 +13,9 @@ int main(){
   la::matrix::Square<double, 3> B(
       1.0, 0.0, 0.0,
       0.0, 1.0, 0.0,
-      0.0, 0.0, 1.0
+      0.0, 0.0, 0.0
   );
+  la::matrix::Square<double, 3> C; C = B;
   cout << A * B << endl;
+  cout << C << endl;
 }
