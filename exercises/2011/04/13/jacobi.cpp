@@ -17,5 +17,5 @@ int main(){
   );
   cout << A.transposed() << endl; 
   A = A * S;
-  cout << A << endl;
+  cout << la::matrix::Square<double, 3>::identity() << endl;
 }

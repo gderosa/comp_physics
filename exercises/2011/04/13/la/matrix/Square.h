@@ -75,6 +75,15 @@ public:
     return Transposed;
   }
 
+  static Square<T, N> identity()
+  {
+    Square<T, N> I;
+    size_t i;
+    for (i=0; i<N; i++)
+      I[i][i] = (T)1;
+    return I;
+  }
+
 private:
   std::vector< std::vector<T> > data;
 };
