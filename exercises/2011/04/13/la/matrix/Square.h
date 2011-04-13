@@ -2,7 +2,20 @@
 #include <vector>
 #include <ostream>
 
-#include "../Vector.h"
+//#include "../Vector.h"
+
+// vector operations : TODO: move to a separate file
+
+template<typename T>
+T operator*(const std::vector<T> first, std::vector<T> second )
+{
+  size_t i;
+  T sum = (T)0;
+  for (i=0; i<first.size(); i++)
+    sum += first[i] * second[i];
+  return sum;
+}
+
 
 namespace la
 {
@@ -13,18 +26,16 @@ template <typename T, size_t N>
 class Square   
 {
 public:  
-  std::vector< std::vector<T> > data;
-
   Square() 
   {
     data.resize(N);
     size_t i;
     for (i=0; i<N; i++) {
-      std::vector<T> row(N, 0.0);
+      std::vector<T> row(N, (T)0); 
       data[i] = row;
     }
   }
-  Square(double element_00, ...)  
+  Square(T element_00, ...)  
   {
     data.resize(N);
     size_t i,j;
@@ -36,30 +47,49 @@ public:
     data[0][0] = element_00;
     // put the other elements of first row
     for (j=1; j<N; j++) {
-      data[0][j] = va_arg(ap, double);
+      data[0][j] = va_arg(ap, T);
     }
     // fill the other rows
     for (i=1; i<N; i++) {
       for (j=0; j<N; j++) {
-        data[i][j] = va_arg(ap, double);
+        data[i][j] = va_arg(ap, T);
       }
     }
     va_end(ap);
   }
 
-  std::vector<T> operator[](const size_t i)
+  std::vector<T> & operator[](const size_t i)
   {
     return data[i];
   }
+
 private:
-  size_t current_row;
+  std::vector< std::vector<T> > data;
 };
 
+// matrix operations
+template <typename T, size_t N>
+Square<T, N> & operator*(Square<T, N> & A, Square<T, N> & B)
+{
+  Square<T, N> * Result = new Square<T, N>;
+  size_t i, j, k;
+  for (i=0; i<N; i++) {
+    for (j=0; j<N; j++) {
+      for (k=0; k<N; k++) {
+        (*Result)[i][j] += A[i][k] * B[k][j];
+      }
+    }
+  }
+  return (*Result);
+}
+
 }
 }
+
+
+
 
 // I/O stuff : TODO: move to a separate file
-
 
 template<typename T, size_t N>
 std::ostream& operator<<(std::ostream& cout, la::matrix::Square<T, N> A)
