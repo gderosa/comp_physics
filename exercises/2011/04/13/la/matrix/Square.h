@@ -63,6 +63,18 @@ public:
     return data[i];
   }
 
+  Square<T, N> transposed()
+  {
+    Square<T, N> Transposed;
+    size_t i, j;
+    for (i=0; i<N; i++) {
+      for (j=0; j<N; j++) {
+        Transposed[i][j] = (*this)[j][i];
+      }
+    }
+    return Transposed;
+  }
+
 private:
   std::vector< std::vector<T> > data;
 };
