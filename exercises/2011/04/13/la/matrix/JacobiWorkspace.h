@@ -43,7 +43,10 @@ public:
     Square<T, N> Old = Matrix;
     T s, c, t, theta;
     theta = (Matrix[p][p] - Matrix[q][q]) / (2 * Matrix[p][q]) ;
-    t = (theta/fabs(theta)) / (fabs(theta) + sqrt(theta*theta + 1)) ; 
+    if ( fabs(theta) < 1e100 )
+      t = (theta/fabs(theta)) / (fabs(theta) + sqrt(theta*theta + 1)) ; 
+    else // avoid overflows
+      t = 1 / (2*theta);
     c = 1.0 / sqrt(t*t + 1.0);
     s = t * c;
     Rotation[p][p] = c;

@@ -3,7 +3,10 @@
 
 #include <cstdarg>
 #include <vector>
+
+//TODO: move this I/O stuff elsewhere
 #include <ostream>
+#include <iomanip>
 
 //#include "../Vector.h"
 
@@ -78,6 +81,11 @@ public:
     return Transposed;
   }
 
+  size_t size()
+  {
+    return N;
+  }
+
   static Square<T, N> identity()
   {
     Square<T, N> I;
@@ -122,7 +130,7 @@ std::ostream& operator<<(std::ostream& cout, la::matrix::Square<T, N> A)
   size_t i, j;
   for (i=0; i<N; i++) {  
     for (j=0; j<N; j++) {
-      cout << A[i][j] << ' ';
+      cout << std::setw(14) << A[i][j];
     }
     cout << std::endl;
   }
