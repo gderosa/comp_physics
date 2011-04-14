@@ -19,7 +19,7 @@ int main(){
   size_t p, q;
   double norm = jacobi.offDiagonalNorm();
   cout << "Initial off-diagonal norm = " << norm << endl;
-  for (n=1; norm > 1e-200; n++) {
+  for (n=1; norm > 1e-50; n++) {
     for (q=0; q < A.size(); q++) {
       for (p=0; p<q; p++) {
         jacobi.rotate(p, q);
