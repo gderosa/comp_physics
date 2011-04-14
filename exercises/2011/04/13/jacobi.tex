@@ -1,0 +1,161 @@
+\documentclass[a4paper]{article}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath,amsfonts}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\lstset{basicstyle=\scriptsize\tt} 
+
+\author{Guido De Rosa}
+
+\begin{document}
+
+\title{Diagonalizzazione di una matrice simmetrica con il metodo di Jacobi}
+
+\maketitle
+
+\section{Introduzione}
+
+Si è implementata, in linguaggio C++, la diagonalizzazione di una matrice 
+simmetrica $4\times4$ mediante una successione finita
+di rotazioni piane (metodo di Jacobi).
+
+Il file principale è {\verb jacobi.cpp }, nel quale è definita la matrice
+di partenza $A$:
+\begin{lstlisting}
+  la::matrix::Square<double, 4> A(
+      1.1,   2.1,   3.1,   4.0,
+      2.1,   2.2,   3.2,   5.0,
+      3.1,   3.2,   3.3,   2.4,
+      4.0,   5.0,   2.4,  -1.0
+  );
+\end{lstlisting}
+
+La sintassi dovrebbe essere sufficientemente autoesplicativa, grazie ad una
+libreria appositamente creata (si veda il file {\verb la/matrix/Square.h }).
+
+Il metodo di calcolo vero e proprio è implementato nel file
+\linebreak{\verb la/matrix/JacobiWorkspace.h } .
+%Per tutto il programma si è adoperata la tecnica dei \emph{templates} che
+%dovrebbe consentire una estensione ai numeri complessi relativamente agevole
+%---almeno in teoria--- riutilizzando gran parte del codice.
+%\begin{lstlisting}
+%// la/matrix/Square.h
+%namespace la
+%{
+%namespace matrix
+%{
+%
+%template <typename T, size_t N>
+%class Square
+%{
+%\end{lstlisting}
+
+\section{Calcolo}
+
+Per cominciare, viene creato un oggetto {\verb jacobi } che è in pratica
+uno spazio di lavoro contenente due matrici:
+\begin{itemize}
+  \item 
+    {\verb jacobi.Matrix }, che rappresenta la matrice da diagonalizzare $A$, la quale 
+    ad ogni passaggio sarà sottoposta
+    ad un'operazione di similitudine $A_{k} = R_{k}^{T}A_{k-1}R_{k}$
+  \item
+    {\verb jacobi.AllRotations }, ovvero la ``rotazione cumulativa'' 
+    $R_{k} = R_{1}R_{2}\ldots R_{k}$, le cui
+    colonne rappresenteranno gli autovettori
+\end{itemize}
+\begin{lstlisting}
+  la::matrix::JacobiWorkspace<double, 4> jacobi(A);
+\end{lstlisting}
+L'oggetto {\verb jacobi } fornisce due metodi importanti
+\begin{itemize}
+  \item
+    {\verb jacobi.rotate(p,q) } aggiorna le due matrici effettuando 
+    una rotazione nel piano $(p, q)$ 
+  \item
+    {\verb jacobi.offDiagonalNorm() } restituisce la somma dei quadrati degli 
+    elementi non diagonali: è la quantità che si vuol rendere piccola
+    a sufficienza per poter ritenere la matrice diagonalizzata
+\end{itemize}
+
+L'ordine in cui sono effettuate le rotazioni è semplicemente ``sequenziale'',
+sino a ricoprire l'intera matrice.
+
+Nel nostro esempio, tutto il procedimento è ripetuto finché 
+{\verb offDiagonalNorm() } non
+diventa più piccolo di $10^{-50}$.
+
+Sempre in {\verb jacobi.cpp }:
+\begin{lstlisting}
+  double norm = jacobi.offDiagonalNorm();
+  cout << "Initial off-diagonal norm = " << norm << endl;
+  for (n=1; norm > 1e-50; n++) {
+    for (q=0; q < A.size(); q++) {
+      for (p=0; p<q; p++) {
+        jacobi.rotate(p, q);
+      }
+    }
+    norm = jacobi.offDiagonalNorm();
+    cout << "iteration #" << n << " off-diagonal norm = " << norm << endl;
+  }
+\end{lstlisting}
+
+\section{Controllo}
+
+Al termine del calcolo viene controllato il valore di 
+$|| A\mathbf{w_i} - \lambda_{i}\mathbf{w_i} ||^2$, 
+dove $\mathbf{w_i}$ è
+l'$i$-esimo autovettore e $\lambda_{i}$ l'$i$-esimo autovalore. 
+Se il calcolo fosse esatto tale quantità sarebbe nulla.
+\begin{lstlisting}
+  for (j=0; j < A.size(); j++) {
+    double eigenvalue = jacobi.Matrix[j][j];
+    vector<double> eigenvector = jacobi.AllRotations.column(j);
+    cout <<
+        "|| A*w(" << j << ") - lambda(" << j << ")*w(" << j << ") ||^2 = "  <<
+        la::vector::squareDistance<double, 4>(
+          A * eigenvector,
+          eigenvalue * eigenvector
+        ) << endl;
+  }
+\end{lstlisting}
+
+\section{Output completo del programma}
+
+\begin{lstlisting}
+Initial matrix A:
+           1.1           2.1           3.1             4
+           2.1           2.2           3.2             5
+           3.1           3.2           3.3           2.4
+             4             5           2.4            -1
+
+Initial off-diagonal norm = 142.04
+iteration #1 off-diagonal norm = 20.2369
+iteration #2 off-diagonal norm = 0.0501938
+iteration #3 off-diagonal norm = 1.52965e-05
+iteration #4 off-diagonal norm = 5.92365e-25
+iteration #5 off-diagonal norm = 1.16506e-85
+
+Diagonalized matrix:
+     -0.684491  -2.41356e-43   1.47368e-67   1.55747e-80
+  -2.41356e-43        11.374   6.78663e-81 -1.21718e-124
+   1.47368e-67   6.78663e-81      0.387243             0
+   1.55747e-80 -1.21718e-124             0      -5.47672
+
+Eigenvectors:
+      0.801873      0.453113     0.0780077     -0.381581
+     -0.470704      0.543584     -0.528172     -0.451651
+     -0.336117      0.528728      0.775288     0.0800053
+      0.149877      0.468671     -0.337458        0.8025
+
+Check eigenvectors:
+|| A*w(0) - lambda(0)*w(0) ||^2 = 1.56617e-30
+|| A*w(1) - lambda(1)*w(1) ||^2 = 2.44547e-29
+|| A*w(2) - lambda(2)*w(2) ||^2 = 7.5433e-30
+|| A*w(3) - lambda(3)*w(3) ||^2 = 3.48208e-31
+
+\end{lstlisting}
+
+\end{document}
