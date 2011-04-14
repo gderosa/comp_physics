@@ -42,30 +42,38 @@ public:
     Square<T, N> Rotation = Square<T, N>::identity();
     Square<T, N> Old = Matrix;
     T s, c, t, theta;
-    theta = (Matrix[p][p] - Matrix[q][q]) / (2 * Matrix[p][q]) ;
+    theta = (Matrix[q][q] - Matrix[p][p]) / ((T)2.0 * Matrix[p][q]) ;
     if ( fabs(theta) < 1e100 )
-      t = (theta/fabs(theta)) / (fabs(theta) + sqrt(theta*theta + 1)) ; 
+      t = (theta/fabs(theta)) / (fabs(theta) + sqrt(theta*theta + (T)1.0)) ; 
     else // avoid overflows
-      t = 1 / (2*theta);
-    c = 1.0 / sqrt(t*t + 1.0);
+      t = (T)1 / ((T)2*theta);
+    c = (T)1 / sqrt(t*t + (T)1);
     s = t * c;
     Rotation[p][p] = c;
     Rotation[q][q] = c;
     Rotation[p][q] = s;
     Rotation[q][p] = -s;
     AllRotations = AllRotations * Rotation;
+
     // direct calculation, see Eq. 11.1.14+
-    T tau = s / (1.0 + c);
+    T tau = s / ((T)1 + c);
     size_t r;
     for(r=0; r<N; r++) {
       if ((r != p) && (r != q)) { 
-        Matrix[r][p] = Matrix[p][r] = Old[r][p] - s*(Old[r][q] - tau*Old[r][p]);
-        Matrix[r][q] = Matrix[q][r] = Old[r][q] + s*(Old[r][p] + tau*Old[r][q]);
+        Matrix[r][p] = Matrix[p][r] = Old[r][p] - s*(Old[r][q] + tau*Old[r][p]);
+        Matrix[r][q] = Matrix[q][r] = Old[r][q] + s*(Old[r][p] - tau*Old[r][q]);
       }
     }
     Matrix[p][p] = Old[p][p] - t*Old[p][q];
     Matrix[q][q] = Old[q][q] + t*Old[p][q];
-    Matrix[p][q] = Matrix[q][p] = 0.0; 
+    Matrix[p][q] = Matrix[q][p] = (T)0; 
+
+    // Rotate the Matrix
+    /*
+    Square<T, N> RotationT = Rotation.transposed();
+    Square<T, N> _RTA = RotationT * Old;
+    Matrix = _RTA * Rotation;
+    */
   }
 };
 

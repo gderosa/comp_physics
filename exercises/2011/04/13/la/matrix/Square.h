@@ -66,6 +66,21 @@ public:
     return Transposed;
   }
 
+  std::vector<T> column(size_t j)
+  {
+    std::vector<T> col(N, (T)0);
+    size_t i;
+    for (i=0; i<N; i++) {
+      col[i] = (*this)[i][j];
+    }
+    return col;
+  }
+
+  std::vector<T> row(size_t i)
+  {
+    return (*this)[i];
+  }
+  
   size_t size()
   {
     return N;
@@ -99,6 +114,19 @@ Square<T, N> operator*(Square<T, N> & A, Square<T, N> & B)
     }
   }
   return Result;
+}
+
+template <typename T, size_t N>
+std::vector<T> operator*(Square<T, N> & A, std::vector<T> & x)
+{
+  std::vector<T> y(N, (T)0);
+  size_t i, j;
+  for (i=0; i<N; i++) {
+    for (j=0; j<N; j++) {
+      y[i] += A[i][j] * x[j];
+    }
+  }
+  return y;
 }
 
 }
