@@ -13,12 +13,13 @@ int main(){
   );
   la::matrix::JacobiWorkspace<double, 3> jacobi(A);
   size_t n;
-  for (n=0; n<4; n++) {
+  while (jacobi.offDiagonalNorm() > 1e-100) {
     jacobi.rotate(0, 1);
     jacobi.rotate(0, 2);
     jacobi.rotate(1, 2);
+    cout << '.';
   }
+  cout << endl;
   cout << jacobi.Matrix << endl;
-  cout <<  endl;
   cout << jacobi.AllRotations << endl;
 }

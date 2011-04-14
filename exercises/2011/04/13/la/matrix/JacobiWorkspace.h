@@ -25,6 +25,17 @@ public:
     AllRotations = Square<T, N>::identity();
   }
 
+  T offDiagonalNorm()
+  {
+    T sum = (T)0;
+    size_t i , j;
+    for (i=0; i<N; i++) {
+      for (j=0;   j<i; j++) sum += fabs(Matrix[i][j]) * fabs(Matrix[i][j]);
+      for (j=i+1; j<N; j++) sum += fabs(Matrix[i][j]) * fabs(Matrix[i][j]);
+    }
+    return sum;
+  }
+
   void rotate(const size_t p, const size_t q) // assuming p < q
   {
     // This will *not* work with complex. TODO: specialized templates
