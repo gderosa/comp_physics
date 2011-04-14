@@ -8,21 +8,6 @@
 #include <ostream>
 #include <iomanip>
 
-//#include "../Vector.h"
-
-// // vector operations : TODO: move to a separate file
-//
-// template<typename T>
-// T operator*(const std::vector<T> first, const std::vector<T> second )
-// {
-//   size_t i;
-//   T sum = (T)0;
-//   for (i=0; i<first.size(); i++)
-//     sum += first[i] * second[i];
-//   return sum;
-// }
-
-
 namespace la
 {
 namespace matrix
