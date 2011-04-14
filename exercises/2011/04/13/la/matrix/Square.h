@@ -1,3 +1,6 @@
+#ifndef LA_MATRIX_SQUARE_H
+#define LA_MATRIX_SQUARE_H
+
 #include <cstdarg>
 #include <vector>
 #include <ostream>
@@ -121,8 +124,9 @@ std::ostream& operator<<(std::ostream& cout, la::matrix::Square<T, N> A)
     for (j=0; j<N; j++) {
       cout << A[i][j] << ' ';
     }
-    if (i < N-1) 
-      cout << std::endl;
+    cout << std::endl;
   }
   return cout;
 }
+
+#endif 
